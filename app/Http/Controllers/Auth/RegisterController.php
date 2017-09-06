@@ -66,7 +66,7 @@ class RegisterController extends Controller
 
         event(new Registered($user = $this->create($request->all())));
 
-        return redirect('/login');
+        return redirect('/login')->with('warning','aktifkan akun lewat email yang dikirim anda');
 
         //$this->guard()->login($user);
 
@@ -97,8 +97,19 @@ class RegisterController extends Controller
     //verifikasi token dari email
     public function verify_register($token,$id)
     {
-        //$user = User::find($id);
+        $user = User::find($id);
+
+        if($user->token != $token){
+            return redirect('/login')->with('warning','tokennya tidak cocok');
+        }
+
+
+        $user->status = 1;
+        $user->save();
+
+        $this->guard()->login($user);
+        return redirect('/home');
         //dd($user);
-        die('hallo' .$token.''. $id );
+        //die('hallo' .$token.''. $id );
     }
 }
