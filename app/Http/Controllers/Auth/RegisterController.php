@@ -6,6 +6,11 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Http\Request;
+use App\Http\Requests;
+use App\Mail\userRegistered;
+use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
@@ -54,6 +59,22 @@ class RegisterController extends Controller
         ]);
     }
 
+
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        return redirect('/login');
+
+        //$this->guard()->login($user);
+
+        //return $this->registered($request, $user)
+                    //    ?: redirect($this->redirectPath());
+    }
+
+
     /**
      * Create a new user instance after a valid registration.
      *
@@ -62,10 +83,21 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'token' => str_random(20),
         ]);
+
+        //mengirim email 
+        Mail::to($user->email)->send(new userRegistered($user));
+    }
+
+    //verifikasi token dari email
+    public function verify_register($token,$id)
+    {
+        $user = User::find($id);
+        dd($user);
     }
 }
