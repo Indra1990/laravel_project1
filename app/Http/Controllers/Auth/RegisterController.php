@@ -97,7 +97,8 @@ class RegisterController extends Controller
     //verifikasi token dari email
     public function verify_register($token,$id)
     {
-        $user = User::find($id);
-        dd($user);
+        //$user = User::find($id);
+        //dd($user);
+        die('hallo' .$token.''. $id );
     }
 }
