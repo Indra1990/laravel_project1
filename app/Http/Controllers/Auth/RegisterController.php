@@ -66,7 +66,7 @@ class RegisterController extends Controller
 
         event(new Registered($user = $this->create($request->all())));
 
-        return redirect('/login')->with('warning','aktifkan akun lewat email yang dikirim anda');
+        return redirect('/login')->with('warning','aktifkan akun lewat email yang dikirim');
 
         //$this->guard()->login($user);
 
