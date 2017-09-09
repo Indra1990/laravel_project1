@@ -16,8 +16,16 @@ class Quote extends Model
     	return $this->belongsTo('App\User');
     }
 
+    public function comments()
+    {
+        return $this->hasMany('App\Comment');
+    }
+
     public function isOwner()
     {
+        if (Auth::guest()) {
+            return false;
+        }
     	return Auth::user()->id == $this->user->id; 
     }
 }

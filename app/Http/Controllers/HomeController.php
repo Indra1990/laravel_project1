@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Mail;
+use Auth;
 use App\User;
 use App\Http\Requests;
 use Illuminate\Http\Request;
@@ -30,5 +31,14 @@ class HomeController extends Controller
 
     }
 
-    
+    public function profile($id)
+    {
+        if($id == null)      
+        $user = User::findOrFail(Auth::user()->id);
+        
+        else
+        $user = User::findOrFail($id);   
+         
+        return view('profile', compact('user'));
+    }
 }

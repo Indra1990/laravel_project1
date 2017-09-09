@@ -132,4 +132,13 @@ class QuoteController extends Controller
         }
         return redirect('/quotes')->with('msg','berhasil dihapus quote');
     }
+
+    public function random()
+    {
+        $quote = Quote::inRandomOrder()->first();
+
+        
+
+        return view('quotes.single',compact('quote'));
+    }
 }

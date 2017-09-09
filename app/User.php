@@ -29,6 +29,11 @@ class User extends Authenticatable
 
     public function quotes()
     {
-        return $this->belongTo('App\Quote');
+        return $this->hasMany('App\Quote');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany('App\Comment');
     }
 }

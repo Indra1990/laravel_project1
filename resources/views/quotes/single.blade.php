@@ -5,9 +5,10 @@
 	<div class="jumbotron">
 		<h1> {{$quote->title}} </h1>
 		<p> {{$quote->subject}}</p>
-		<p>Di Tulis Oleh : {{$quote->user->name}}</p>
-
+		<p>Di Tulis Oleh : <a href="/profile/{{$quote->user->id}}">{{$quote->user->name}}</a></p>
+		
 		<p><a href="/quotes" class="btn btn-primary btn-lg">kembali ke index</a></p>
+		
 		@if($quote->isOwner())
 			<p><a href="/quotes/{{$quote->id}}/edit" class="btn btn-primary btn-lg"> Edit</a></p>
 
@@ -16,9 +17,39 @@
             <input type="hidden" name="_method" value="DELETE">
             <input type="submit" class="btn btn-danger btn-lg" value="Delete">
 		</form>
+		@endif	
+	</div>
 
-		@endif
-	</div>	
+	@if(session('msg'))
+		<div class="alert alert-success">
+		<p>{{ session('msg') }}</p>
+		</div>
+	@endif
+
+	@foreach($quote->comments as $comment)
+		<P>{{ $comment->subject}}</P>
+		<p>Ditulis Oleh : <a href="/profile/{{$comment->user->id}}"> {{ $comment->user->name}}</a></p>
+		<hr> 
+	@endforeach
+
+	 	@if(count($errors)>0)
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+        @endif
+       
+		<form action="/comment/{{$quote->id}}" method="POST">
+			{{ csrf_field() }}
+			<div class="form-group">
+			<label for="subject">Isi Komentar</label>
+			<textarea class="form-control" name="subject" rows="8" cols="80"></textarea>
+			</div>
+            <input type="submit" class="btn btn-primary " value="Submit Komentar">
+		</form>
 </div>
 @endsection
 
