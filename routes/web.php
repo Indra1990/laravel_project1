@@ -4,6 +4,9 @@ Route::group(['middleware' => 'auth'], function(){
 
 	Route::resource('quotes','QuoteController', ['except' => ['index', 'show']]);
 	Route::post('/comment/{id}', 'CommentController@store');
+	Route::put('/comment/{id}', 'CommentController@update');
+	Route::get('/comment/{id}/edit', 'CommentController@edit');
+	Route::delete('/comment/{id}', 'CommentController@destroy');
 
 });
 
