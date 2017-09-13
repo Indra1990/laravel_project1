@@ -1,14 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
+	<link href="{{ asset('css/comments.css') }}" rel="stylesheet">
+
 <div class="container">
 	<div class="jumbotron">
 		<h1> {{$quote->title}} </h1>
 		<p> {{$quote->subject}}</p>
 		<p>Di Tulis Oleh : <a href="/profile/{{$quote->user->id}}">{{$quote->user->name}}</a></p>
-		
+
 		<p><a href="/quotes" class="btn btn-primary btn-lg">kembali ke index</a></p>
-		
+
 		@if($quote->isOwner())
 			<p><a href="/quotes/{{$quote->id}}/edit" class="btn btn-primary btn-lg"> Edit</a></p>
 
@@ -17,7 +19,7 @@
             <input type="hidden" name="_method" value="DELETE">
             <input type="submit" class="btn btn-danger btn-lg" value="Delete">
 		</form>
-		@endif	
+		@endif
 	</div>
 
 	@if(session('msg'))
@@ -27,10 +29,13 @@
 	@endif
 
 	@foreach($quote->comments as $comment)
-		<P>{{ $comment->subject}}</P>
-		<p>Ditulis Oleh : <a href="/profile/{{$comment->user->id}}"> {{ $comment->user->name}}</a></p>
-		<hr> 
+	 <div class="comment-box">
+			<h4 class="title">Ditulis Oleh : <a href="/profile/{{$comment->user->id}}"> {{ $comment->user->name}}</a></h4>
+			{{ $comment->subject	}}
+	</div>
 	@endforeach
+	{{--	<p>Ditulis Oleh : <a href="/profile/{{$comment->user->id}}"> {{ $comment->user->name}}</a></p>
+ --}}
 
 	 	@if(count($errors)>0)
                 <div class="alert alert-danger">
@@ -41,7 +46,7 @@
                     </ul>
                 </div>
         @endif
-       
+
 		<form action="/comment/{{$quote->id}}" method="POST">
 			{{ csrf_field() }}
 			<div class="form-group">
@@ -52,4 +57,3 @@
 		</form>
 </div>
 @endsection
-
