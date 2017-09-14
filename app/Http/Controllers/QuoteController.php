@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use App\User;
 use App\Quote;
+use App\comment;
 use Illuminate\Http\Request;
 
 class QuoteController extends Controller
@@ -68,7 +69,7 @@ class QuoteController extends Controller
      */
     public function show($slug)
     {
-        $quote = Quote::where('slug', $slug)->first();
+        $quote = Quote::with('comments.user')->where('slug', $slug)->first();
 
         if (empty($quote)) {
             abort(404);
@@ -137,7 +138,7 @@ class QuoteController extends Controller
     {
         $quote = Quote::inRandomOrder()->first();
 
-        
+
 
         return view('quotes.single',compact('quote'));
     }
