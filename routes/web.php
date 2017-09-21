@@ -19,3 +19,7 @@ Route::resource('quotes','QuoteController', ['only' => ['index', 'show' ]]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/verify/{token}/{id}', 'Auth\RegisterController@verify_register');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
