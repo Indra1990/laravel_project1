@@ -15,6 +15,7 @@
 {{--    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
  --}}
     {{-- <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script> --}}
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="{{ asset('tinymce/tinymce.min.js') }}">
 
     </script>
@@ -83,6 +84,7 @@
     </div>
 
     <!-- Scripts -->
+    
     <script src="{{ elixir("js/app.js") }}"></script>
 {{--  mix.js('resources/assets/js/app.js', 'public/js');
 --}}

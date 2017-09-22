@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use App\Tag;
 use App\User;
 use App\Quote;
 use App\comment;
@@ -17,7 +18,7 @@ class QuoteController extends Controller
      */
     public function index()
     {
-        $quotes = Quote::all();
+        $quotes = Quote::with('tags')->get();
         return view('quotes.index', compact('quotes'));
     }
 
@@ -28,7 +29,8 @@ class QuoteController extends Controller
      */
     public function create()
     {
-        return view('quotes/create');
+        $tags = Tag::all();
+        return view('quotes/create',compact('tags'));
     }
 
     /**
@@ -39,13 +41,19 @@ class QuoteController extends Controller
      */
     public function store(Request $request)
     {
+        //validation title and subject
         $this->validate($request,[
 
             'title' => 'required|min:3',
             'subject' => 'required|min:5',
 
             ]);
-
+        //validation tags
+        $request->tags = array_diff($request->tags, [0]);
+        if(empty($request->tags)) 
+            return redirect('quotes/create')->withInput($request->input())->with('tag_error','Tag Tidak Boleh Kosong');
+        
+        //create slug
         $slug = str_slug($request->title,'-');
         if (Quote::where('slug',$slug)->first() !=null)
             $slug = $slug .'-'.time();
@@ -58,6 +66,10 @@ class QuoteController extends Controller
             'user_id' => Auth::user()->id
 
             ]);
+
+
+        $quotes->tags()->attach($request->tags);
+
         return redirect('quotes')->with('msg', 'kutipan berhasil dibuat');
     }
 
@@ -87,8 +99,8 @@ class QuoteController extends Controller
     public function edit($id)
     {
         $quote = Quote::find($id);
-
-        return view('quotes.edit',compact('quote'));
+        $tags = Tag::all();
+        return view('quotes.edit',compact('quote','tags'));
     }
 
     /**
@@ -100,12 +112,26 @@ class QuoteController extends Controller
      */
     public function update(Request $request, $id)
     {
+         //validation title and subject
+        $this->validate($request,[
+
+            'title' => 'required|min:3',
+            'subject' => 'required|min:5',
+
+            ]);
+         //validation tags
+        $request->tags = array_diff($request->tags, [0]);
+        if(empty($request->tags)) 
+            return back()->withInput($request->input())->with('tag_error','Tag Tidak Boleh Kosong');
+
         $quote = Quote::find($id);
         if($quote->isOwner()){
         $quote->update([
                 'title' => $request->title,
                 'subject' => $request->subject,
             ]);
+
+        $quote->tags()->sync($request->tags);
         }
         else{
 

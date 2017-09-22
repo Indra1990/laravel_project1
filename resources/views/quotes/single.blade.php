@@ -6,7 +6,7 @@
 <div class="container">
 	<div class="jumbotron">
 		<h1> {{$quote->title}} </h1>
-		<p> {{$quote->subject}}</p>
+		<p>{{$quote->subject}}</p>
 		<p>Di Tulis Oleh : <a href="/profile/{{$quote->user->id}}">{{$quote->user->name}}</a></p>
 
 		<p><a href="/quotes" class="btn btn-primary btn-lg">kembali ke index</a></p>

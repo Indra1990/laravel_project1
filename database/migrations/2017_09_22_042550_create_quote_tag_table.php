@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
@@ -19,8 +19,8 @@ class CreateQuoteTagTable extends Migration
             $table->integer('tag_id')->unsigned();
             $table->timestamps();
 
-            $table->foreign('tag_id')->references('id')->on('quotes')->onDelete('cascade');
-            $table->foreign('quote_id')->references('id')->on('tags')->onDelete('cascade');
+            $table->foreign('tag_id')->references('id')->on('tags');
+            $table->foreign('quote_id')->references('id')->on('quotes');
 
         });
     }

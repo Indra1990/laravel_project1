@@ -23,6 +23,12 @@
 		<div class="col-md-4">
 			<div class="thumbnail">
 				<div class="caption">{{ $quote->title}}</div>
+				<hr>
+				<p>Tags :
+				@foreach ($quote->tags as $tag)					
+				<span>{{ $tag->tag_name }},</span>
+				@endforeach
+				</p>
 				<p><a href="/quotes/{{$quote->slug}}" class="btn btn-primary"> Lihat Kutipan</a></p>
 			</div>
 		</div>
