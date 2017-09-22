@@ -11,10 +11,12 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ elixir("css/app.css") }}">
+{{--    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+ --}}
     {{-- <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script> --}}
     <script type="text/javascript" src="{{ asset('tinymce/tinymce.min.js') }}">
-        
+
     </script>
 </head>
 <body>
@@ -41,6 +43,7 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
                         &nbsp;
+                        <li><a href="{{ url('/quotes') }}">Quote</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -56,6 +59,7 @@
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
+                                  <li><a href="/profile/{{ Auth::user()->id }}">Profile</a></li>
                                     <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
@@ -79,6 +83,8 @@
     </div>
 
     <!-- Scripts -->
-    mix.js('resources/assets/js/app.js', 'public/js');
+    <script src="{{ elixir("js/app.js") }}"></script>
+{{--  mix.js('resources/assets/js/app.js', 'public/js');
+--}}
 </body>
 </html>

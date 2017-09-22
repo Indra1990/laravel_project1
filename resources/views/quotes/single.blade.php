@@ -33,17 +33,19 @@
 	 <div class="comment-box">
 			<h4 class="title">Ditulis Oleh : <a href="/profile/{{$comment->user->id}}"> {{ $comment->user->name}}</a></h4>
 			{{ $comment->subject	}}
-	</div>
-		@if($comment->isOwner())
-			<p><a href="/comment/{{$comment->id}}/edit" class="btn btn-primary btn-lg"> Edit</a></p>
+			  <div class="panel-footer">	@if($comment->isOwner())
+						<p><a href="/comment/{{$comment->id}}/edit" class="btn btn-primary btn-xs"> Edit</a></p>
 
-			<form action="/comment/{{ $comment->id }}" method="POST">
-			{{ csrf_field() }}
-						<input type="hidden" name="_method" value="DELETE">
-						<input type="submit" class="btn btn-danger btn-lg" value="Delete">
-		</form>
-		@endif
+						<form action="/comment/{{ $comment->id }}" method="POST">
+						{{ csrf_field() }}
+									<input type="hidden" name="_method" value="DELETE">
+									<input type="submit" class="btn btn-danger btn-xs" value="Delete">
+					</form>
+					@endif</div>
+	</div>
+
 	@endforeach
+	{{----}}
 
 	 	@if(count($errors)>0)
                 <div class="alert alert-danger">

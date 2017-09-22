@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
+use App\Quote;
 
 class HomeController extends Controller
 {
@@ -24,5 +26,11 @@ class HomeController extends Controller
     public function index()
     {
         return view('home');
+    }
+
+    public function profile($id)
+    {
+      $user =User::find($id);
+      return view('/profile',compact('user'));
     }
 }
