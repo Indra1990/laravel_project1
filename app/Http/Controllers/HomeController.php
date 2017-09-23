@@ -30,7 +30,7 @@ class HomeController extends Controller
 
     public function profile($id)
     {
-      $user =User::find($id);
+      $user =User::findOrFail($id);
       return view('/profile',compact('user'));
     }
 }

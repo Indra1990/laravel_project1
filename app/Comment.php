@@ -20,12 +20,18 @@ class Comment extends Model
     {
         return $this->belongsTo('App\Quote');
     }
+    
+    public function likes()
+    {
+        return $this->morphMany('App\likes','likeable');
+    }
 
-		public function isOwner()
-		{
-				if (Auth::guest()) {
-						return false;
-				}
-			return Auth::user()->id == $this->user->id;
+	public function isOwner()
+	{
+		if (Auth::guest()) {
+			return false;
 		}
+
+		return Auth::user()->id == $this->user->id;
+	}
 }
