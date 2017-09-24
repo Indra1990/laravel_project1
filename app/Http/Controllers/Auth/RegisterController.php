@@ -32,7 +32,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/quotes';
 
     /**
      * Create a new controller instance.
@@ -108,7 +108,7 @@ class RegisterController extends Controller
         $user->save();
 
         $this->guard()->login($user);
-        return redirect('/home');
+        return redirect('/quotes')->with('actived', 'Selamat, Akun Anda Sudah Di aktivasi');
         //dd($user);
         //die('hallo' .$token.''. $id );
     }

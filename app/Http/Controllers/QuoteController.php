@@ -71,7 +71,7 @@ class QuoteController extends Controller
 
             ]);
         //validation tags
-        $request->tags = array_diff($request->tags, [0]);
+        $request->tags = array_unique(array_diff($request->tags, [0]));
         if(empty($request->tags)) 
             return redirect('quotes/create')->withInput($request->input())->with('tag_error','Tag Tidak Boleh Kosong');
         

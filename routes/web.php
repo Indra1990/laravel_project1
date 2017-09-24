@@ -7,6 +7,8 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::put('/comment/{id}', 'CommentController@update');
 	Route::get('/comment/{id}/edit', 'CommentController@edit');
 	Route::delete('/comment/{id}', 'CommentController@destroy');
+	Route::get('/like/{type}/{model}', 'LikeController@like');
+
 
 });
 
@@ -19,7 +21,4 @@ Route::get('quotes/filter/{tag}', 'QuoteController@filter');
 Route::resource('quotes','QuoteController', ['only' => ['index', 'show' ]]);
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/verify/{token}/{id}', 'Auth\RegisterController@verify_register');
-
-Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');

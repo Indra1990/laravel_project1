@@ -11,6 +11,11 @@ class Quote extends Model
         'title', 'subject', 'slug','user_id',
     ];
 
+    public function getTitleAttribute($title)
+    {
+        return ucwords($title);
+    }
+
     public function user()
     {
     	return $this->belongsTo('App\User');
@@ -28,7 +33,13 @@ class Quote extends Model
 
     public function likes()
     {
-        return $this->morphMany('App\likes','likeable');
+        //morphMany bisa ke dua model mempunyai fungsi yg sama 
+        return $this->morphMany('App\Like','likeable');
+    }
+
+    public function is_liked()
+    {
+        return $this->likes->where('user_id', Auth::user()->id)->count();
     }
 
     public function isOwner()

@@ -18,6 +18,11 @@ class User extends Authenticatable
         'name', 'email', 'password','token','status',
     ];
 
+    public function getNameAttribute($name)
+    {
+        return ucwords($name);
+    }
+
     /**
      * The attributes that should be hidden for arrays.
      *

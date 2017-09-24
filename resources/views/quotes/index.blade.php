@@ -3,12 +3,18 @@
 @section('content')
 <link rel="stylesheet" type="text/css" href="{{ asset('css/search.css') }}">
 <div class="container">
+	{{-- message from CRUD quote --}}
 	@if(session('msg'))
 	<div class="alert alert-success">
 		<p>{{ session('msg') }}</p>
 	</div>
+	{{-- message aktivasi register from email  --}}
 	@endif 
-
+	@if(session('actived'))
+	<div class="alert alert-success">
+		<p>{{ session('actived') }}</p>
+	</div>
+	@endif 
 	<div class="row">
 		<div class="col-md-4">
 			<div class="btn-group">
@@ -30,7 +36,7 @@
             </form>
 		</div>
 		<div class="col-md-4">
-			Filter Tag :
+			<b>Filter Tag :</b>
 			@foreach ($tags as $tag)				
 			<a href="/quotes/filter/{{ $tag->tag_name }}">/{{ $tag->tag_name }}</a>
 			@endforeach
@@ -42,13 +48,13 @@
 		@foreach($quotes as $quote)
 		<div class="col-md-4">
 			<div class="thumbnail">
-				<div class="caption">{{ $quote->title}}</div>
-				<span>Tags :
+				<span><div class="caption"><b>{{$quote->title}}</b>	</div></span>
+				<span><b>Tags : </b>
 				@foreach ($quote->tags as $tag)					
 				<span>{{ $tag->tag_name }},</span>
 				@endforeach
 				</span>
-				<p><a href="/quotes/{{$quote->slug}}" class="btn btn-primary"> Lihat Kutipan</a></p>
+				<p><a href="/quotes/{{$quote->slug}}" class="btn btn-primary">Lihat Kutipan</a></p>
 			</div>
 		</div>
 		@endforeach
