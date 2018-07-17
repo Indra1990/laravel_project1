@@ -8,7 +8,7 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('/comment/{id}/edit', 'CommentController@edit');
 	Route::delete('/comment/{id}', 'CommentController@destroy');
 	Route::get('/like/{type}/{model}', 'LikeController@like');
-
+	Route::get('/unlike/{type}/{model}', 'LikeController@unlike');
 
 });
 

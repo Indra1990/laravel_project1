@@ -2,7 +2,7 @@
 
 namespace App;
 
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 
 class Quote extends Model
@@ -33,7 +33,7 @@ class Quote extends Model
 
     public function likes()
     {
-        //morphMany bisa ke dua model mempunyai fungsi yg sama 
+        //morphMany bisa ke dua model mempunyai fungsi yg sama
         return $this->morphMany('App\Like','likeable');
     }
 
@@ -47,6 +47,6 @@ class Quote extends Model
         if (Auth::guest()) {
             return false;
         }
-    	return Auth::user()->id == $this->user->id; 
+    	return Auth::user()->id == $this->user->id;
     }
 }

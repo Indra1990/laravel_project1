@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use App\Tag;
 use App\User;
 use App\Quote;
@@ -24,21 +24,22 @@ class QuoteController extends Controller
         }
         else{
         $quotes = Quote::with('tags')->get();
+
         }
 
-        $tags = Tag::all(); 
+        $tags = Tag::all();
         return view('quotes.index', compact('quotes','tags'));
     }
 
     public function filter($tag)
     {
-      
+
         $tags = Tag::all();
-     
+
         $quotes = Quote::with('tags')->whereHas('tags', function($query) use($tag){
             $query->where('tag_name', $tag);
             })->get();
-         
+
 
         return view('quotes.index', compact('quotes','tags'));
     }
@@ -72,9 +73,9 @@ class QuoteController extends Controller
             ]);
         //validation tags
         $request->tags = array_unique(array_diff($request->tags, [0]));
-        if(empty($request->tags)) 
+        if(empty($request->tags))
             return redirect('quotes/create')->withInput($request->input())->with('tag_error','Tag Tidak Boleh Kosong');
-        
+
         //create slug
         $slug = str_slug($request->title,'-');
         if (Quote::where('slug',$slug)->first() !=null)
@@ -103,13 +104,16 @@ class QuoteController extends Controller
      */
     public function show($slug)
     {
+      if (Auth::check()) {
         $quote = Quote::with('comments.user')->where('slug', $slug)->first();
+        return view('quotes.single',compact('quote'));
+
+      }
 
         if (empty($quote)) {
             abort(404);
         }
 
-        return view('quotes.single',compact('quote'));
     }
 
     /**
@@ -143,7 +147,7 @@ class QuoteController extends Controller
             ]);
          //validation tags
         $request->tags = array_diff($request->tags, [0]);
-        if(empty($request->tags)) 
+        if(empty($request->tags))
             return back()->withInput($request->input())->with('tag_error','Tag Tidak Boleh Kosong');
 
         $quote = Quote::find($id);
@@ -185,8 +189,6 @@ class QuoteController extends Controller
     public function random()
     {
         $quote = Quote::inRandomOrder()->first();
-
-
 
         return view('quotes.single',compact('quote'));
     }

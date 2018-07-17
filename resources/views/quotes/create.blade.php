@@ -2,14 +2,8 @@
 
 @section('content')
 
-<script type="text/javascript">
-    tinymce.init({
-        selector : '#tinytextarea',
-        menubar  : false,
-        plugins  :'codesample , jbimages, image',
-        toolbar  :'codesample, italic, bold, jbimages ,image'
-    });    
-</script>
+
+
 
 <div class="container">
     <div class="row">
@@ -42,7 +36,7 @@
 
                      <div class="form-group">
                         <label for="subject">Isi Kutipan</label>
-                        <textarea class="form-control" name="subject" rows="8" cols="80" id="tinytextarea">{{old('subject')}}</textarea>
+                        <textarea name="subject"  class="form-control" rows="8" cols="80" id="tinytextarea">{{old('subject')}}</textarea>
                     </div>
                     {{-- tags --}}
                     <div id="tag_wrapper" class="form-group">
@@ -65,4 +59,17 @@
         </div>
     </div>
 </div>
-@endsection
+
+{{-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+ --}}{{--      <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
+ --}}{{-- <script type="text/javascript" src="{{ asset('js/summernote.js') }}"></script>
+ --}}
+ <script type="text/javascript">
+    tinymce.init({
+        selector : '#tinytextarea',
+        menubar  : false,
+        plugins  :'codesample , jbimages, image',
+        toolbar  :'codesample, italic, bold, jbimages ,image'
+    });    
+</script>
+ @endsection

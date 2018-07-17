@@ -2,7 +2,7 @@
 
 namespace App;
 
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
@@ -20,7 +20,7 @@ class Comment extends Model
     {
         return $this->belongsTo('App\Quote');
     }
-    
+
     public function likes()
     {
         return $this->morphMany('App\Like','likeable');
