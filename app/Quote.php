@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Quote extends Model
 {
+		use LikesTrait;
+
 	protected $fillable = [
         'title', 'subject', 'slug','user_id',
     ];
@@ -31,16 +33,6 @@ class Quote extends Model
         return $this->belongsToMany('App\Tag');
     }
 
-    public function likes()
-    {
-        //morphMany bisa ke dua model mempunyai fungsi yg sama
-        return $this->morphMany('App\Like','likeable');
-    }
-
-    public function is_liked()
-    {
-        return $this->likes->where('user_id', Auth::user()->id)->count();
-    }
 
     public function isOwner()
     {

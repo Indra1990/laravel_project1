@@ -11,14 +11,14 @@
 		<p>Di Tulis Oleh : <a href="/profile/{{$quote->user->id}}">{{$quote->user->name}}</a></p>
 
 		<a href="/quotes" class="btn btn-primary btn-lg">kembali ke index</a>
-		<div class="like_wrapper">
-			<div class="btn btn-primary btn-lg {{ $quote->is_liked() ? 'btn-danger btn-unlike' : 'btn-primary btn-like' }}" data-model-id="{{$quote->id}}" data-type="1">{{ $quote->is_liked() ? 'unlike' : 'like' }}
-			</div>
-		<div class="total_like">	
-			<span class="like_number">{{ $quote->likes->count() }}</span>total like
-			<span class="like_warning" style="display: none;">Tidak boleh like sendiri </span>
-		</div>	
+
+		<div class="col-md-2">
+			@component('layouts/likes',
+			["content" => $quote, 'model_id'=>1])
+			@endcomponent
 		</div>
+
+		<div class="col-md-2">
 		{{-- edit delete komentar oleh own user  --}}
 		@if($quote->isOwner())
 			<a href="/quotes/{{$quote->id}}/edit" class="btn btn-primary btn-lg"> Edit</a>
@@ -29,6 +29,7 @@
             <div><input type="submit" class="btn btn-danger btn-lg" value="Delete"></div>
 		</form>
 		@endif
+	</div>
 	</div>
 
 	@if(session('msg'))
@@ -50,17 +51,13 @@
 							<input type="hidden" name="_method" value="DELETE">
 							<input type="submit" class="btn btn-danger btn-xs" value="Delete">
 						</form>
-				</div>
+
 				@endif
-				<div class="like_wrapper">
-					<div class="btn btn-primary btn-lg {{ $comment->is_liked() ? 'btn-danger btn-unlike' : 'btn-primary btn-like' }}" data-model-id="{{$comment->id}}" data-type="2">{{ $comment->is_liked() ? 'unlike' : 'like' }}
-					</div>
-				<div class="total_like">	
-					<span class="like_number">{{ $quote->likes->count() }}</span>total like
-					<span class="like_warning" style="display: none;">Tidak boleh like sendiri</span>
-				</div>	
-			</div>
-	</div>
+					@component('layouts/likes',
+					["content" => $comment, 'model_id'=>2])
+					@endcomponent
+						</div>
+		</div>
 	@endforeach
 	{{----}}
 

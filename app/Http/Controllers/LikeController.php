@@ -21,7 +21,7 @@ class LikeController extends Controller
     	//user tidak boleh like sendiri
     	if (Auth::user()->id == $model->user->id)
     		die('0');
-
+        
     	//user tidak boleh like berkali"
     	if ($model->is_liked() == null ) {
 	    	Like::create([

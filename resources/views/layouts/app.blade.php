@@ -19,8 +19,8 @@
 
     <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
 {{--     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
- --}} 
- 
+ --}}
+
 </head>
 <body>
     <div id="app">
@@ -56,6 +56,8 @@
                             <li><a href="{{ route('login') }}">Login</a></li>
                             <li><a href="{{ route('register') }}">Register</a></li>
                         @else
+                          <li><a href="{{url('/notifications')}}">Notifications: ({{ Auth::user()->notifications->where('seen',0)->count()}})</a></li>
+
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -86,7 +88,7 @@
     </div>
 
     <!-- Scripts -->
-    
+
     <script src="{{ elixir("js/app.js") }}"></script>
 
 {{--  mix.js('resources/assets/js/app.js', 'public/js');

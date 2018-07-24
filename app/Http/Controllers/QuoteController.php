@@ -104,12 +104,8 @@ class QuoteController extends Controller
      */
     public function show($slug)
     {
-      if (Auth::check()) {
         $quote = Quote::with('comments.user')->where('slug', $slug)->first();
         return view('quotes.single',compact('quote'));
-
-      }
-
         if (empty($quote)) {
             abort(404);
         }
@@ -146,7 +142,7 @@ class QuoteController extends Controller
 
             ]);
          //validation tags
-        $request->tags = array_diff($request->tags, [0]);
+         $request->tags = array_unique(array_diff($request->tags, [0]));
         if(empty($request->tags))
             return back()->withInput($request->input())->with('tag_error','Tag Tidak Boleh Kosong');
 

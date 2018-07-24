@@ -6,6 +6,7 @@ use Auth;
 use App\User;
 use App\Quote;
 use App\Comment;
+use App\Notification;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -24,6 +25,14 @@ class CommentController extends Controller
     			'quote_id'=> $id,
     			'user_id' => Auth::user()->id,
     		]);
+
+          if ($quote->user->id != Auth::user()->id) {
+            Notification::create([
+              'user_id' => $quote->user->id,
+              'quote_id'=> $id,
+              'subject'=> 'ada komentar dari '. Auth::user()->name,
+            ]);
+          }
 
     	return redirect('/quotes/'.$quote->slug)->with('msg', 'komentar berhasil di submit');
     }

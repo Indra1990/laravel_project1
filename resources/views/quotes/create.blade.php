@@ -24,7 +24,7 @@
                 @if(session('tag_error'))
                     <div class="alert alert-danger">
                         {{ session('tag_error') }}
-                    </div>    
+                    </div>
                 @endif
                 {{-- posting quote --}}
                 <form action="/quotes" method="POST">
@@ -39,17 +39,31 @@
                         <textarea name="subject"  class="form-control" rows="8" cols="80" id="tinytextarea">{{old('subject')}}</textarea>
                     </div>
                     {{-- tags --}}
+
                     <div id="tag_wrapper" class="form-group">
                         <label for=""> Tag Maximal 3</label>
                         <div id="add_tag"> Add Tag </div>
+                        @if (old('tags'))
+                          @for ($i=0; $i < count(old('tags')); $i++)
+                            <select id="tag_select" name="tags[]">
+                                <option value="0">Tidak Ada</option>
+                                @foreach($tags as $tag)
+                                <option value="{{ $tag->id }}" @if(old('tags.'.$i) == $tag->id) selected="selected" @endif>
+                                  {{ $tag->tag_name }}</option>
+                                @endforeach
+                            </select>
+                          @endfor
+                        @else
                         <select id="tag_select" name="tags[]">
                             <option value="0">Tidak Ada</option>
                             @foreach($tags as $tag)
                             <option value="{{ $tag->id }}">{{ $tag->tag_name }}</option>
                             @endforeach
                         </select>
+                      @endif
                         <script type="text/javascript" src="{{ asset('js/tag.js') }}"></script>
                     </div>
+                    {{-- tags --}}
 
                     <div class="form-group">
                     <input type="submit" class="btn btn-primary btn-block" value="Submit">
@@ -70,6 +84,6 @@
         menubar  : false,
         plugins  :'codesample , jbimages, image',
         toolbar  :'codesample, italic, bold, jbimages ,image'
-    });    
+    });
 </script>
  @endsection

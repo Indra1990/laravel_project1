@@ -13,26 +13,32 @@ class UserSeeder extends Seeder
     {
 		DB::table('users')->insert([
 			[
-			'name' => 'admin',
+			     'name' => 'admin',
             'email' => 'admin@gmail.com',
             'role' => '2',
-        	'password' => bcrypt('admin123'),
+        	   'password' => bcrypt('admin123'),
+             'token' => str_random(50),
+
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
 			],
 			[
-			'name' => 'indrabrada',
+			     'name' => 'indrabrada',
             'email' => 'indra@gmail.com',
             'role' => '1',
-        	'password' => bcrypt('123456'),
+        	   'password' => bcrypt('123456'),
+             'token' => str_random(50),
+
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
 			],
 			[
-			'name' => 'luki',
+			     'name' => 'luki',
             'email' => 'luki@gmail.com',
             'role' => '1',
-        	'password' => bcrypt('123456'),
+        	   'password' => bcrypt('123456'),
+             'token' => str_random(50),
+
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
 			],
@@ -41,9 +47,11 @@ class UserSeeder extends Seeder
             'email' => 'joe@gmail.com',
             'role' => '1',
             'password' => bcrypt('123456'),
+            'token' => str_random(50),
+
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
             ],
-		]);  
+		]);
 	}
 }
